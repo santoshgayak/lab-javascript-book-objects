@@ -47,6 +47,9 @@ let booksArray =
 // Iteration 2 | Book Details
 function getBookDetails(bookObj) {
   // Your code here:
+  if(!bookObj){
+    return
+  }
   return `${bookObj.title} - ${bookObj.author} - ${bookObj.pages} pages`;
 }
 
@@ -91,25 +94,22 @@ const dictionary = {
 
 function booksByAuthor(dictionary) {
   // Your code here:
+  if(!dictionary) return
+  
   const booksObj = [];
 
-  //get the keys
-  const authors = Object.keys(dictionary);
-
-  //run the loop as many times as there are keys in keyOfDictionay
-  for(key in authors){
-    //run loop as many times as the element in the value array
-    for( let element of dictionary[authors[key]]){
+  Object.entries(dictionary).forEach(([author, books]) =>{
+    books.forEach(([title, pages]) =>{
       booksObj.push({
-        title:element[0],
-        pages:element[1],
-        author:authors[key]
+        title,
+        pages,
+        author
       })
-    }
-  }
-  return booksObj;
+    })
+    
+  })
+    return booksObj;
 }
-
 booksByAuthor(dictionary);
 
 
