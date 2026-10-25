@@ -2,7 +2,7 @@
 
 
 // Your code here:
-const booksArray = 
+let booksArray = 
 [
   { 
     title: "The Old Man and the Sea",
@@ -36,8 +36,8 @@ const booksArray =
     pages: 288,
     author: "Josh Waitzkin",
     details: {
-      language: "English",
-      description: "The Art of Learning takes readers through Waitzkin's unique journey to excellence. He explains in clear detail how a well-thought-out, principled approach to learning is what separates success from failure."
+        language: "English",
+        description: "The Art of Learning takes readers through Waitzkin's unique journey to excellence. He explains in clear detail how a well-thought-out, principled approach to learning is what separates success from failure."
     }
   }
 
@@ -45,30 +45,25 @@ const booksArray =
 
 
 // Iteration 2 | Book Details
-function getBookDetails(obj) {
+function getBookDetails(bookObj) {
   // Your code here:
-  return `${obj.title} - ${obj.author} - ${obj.pages} pages`;
+  return `${bookObj.title} - ${bookObj.author} - ${bookObj.pages} pages`;
 }
 
 console.log(getBookDetails(booksArray[3]));
 
 // Iteration 3 | Delete Language
 // Your code here:
-for(let i = 0; i < booksArray.length; i++){
-  delete booksArray[i].details.language;
+for(let book of booksArray){
+    delete book.details.language;
 }
-
-
 
 
 // Iteration 4 | Estimated Reading Time
 // Your code here:
-for(let i = 0; i < booksArray.length; i++){
-  booksArray[i].readingTime = Math.ceil(( booksArray[i].pages * 500 )/90);
-}
-
-
-
+booksArray = booksArray.map((book)=>{
+  return { ...book, readingTime:Math.ceil((book.pages * 500)/90)}
+})
 
 
 // Bonus: Iteration 5 | Books Dictionary
@@ -99,22 +94,20 @@ function booksByAuthor(dictionary) {
   const booksObj = [];
 
   //get the keys
-  const keysOfDictionary = Object.keys(dictionary);
+  const authors = Object.keys(dictionary);
 
   //run the loop as many times as there are keys in keyOfDictionay
-  for(key in keysOfDictionary){
+  for(key in authors){
     //run loop as many times as the element in the value array
-    for( let element of dictionary[keysOfDictionary[key]]){
+    for( let element of dictionary[authors[key]]){
       booksObj.push({
         title:element[0],
         pages:element[1],
-        author:keysOfDictionary[key]
+        author:authors[key]
       })
     }
   }
-
   return booksObj;
-  
 }
 
 booksByAuthor(dictionary);
@@ -123,10 +116,8 @@ booksByAuthor(dictionary);
 // Bonus: Iteration 6 | Average Page Count
 function averagePageCount(booksArray) {
   // Your code here:
-  let sumOfAllPages = null;
-  booksArray.forEach(element => {
-    sumOfAllPages += element.pages
-  });
-  return sumOfAllPages/booksArray.length
+  // get the total pages
+  const totalPages = booksArray.reduce((sum, book) => sum + book.pages, 0)
+  return totalPages/booksArray.length
 }
 averagePageCount(booksArray);
